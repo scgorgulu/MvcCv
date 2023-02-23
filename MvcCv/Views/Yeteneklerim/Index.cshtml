@@ -1,0 +1,62 @@
+﻿@using MvcCv.Models.Entity;
+@model List<TblYeteneklerim>
+
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+@{
+    string renk = "";
+    string label = "";
+}
+
+
+<h2 class="m-2">Yetenekler</h2>
+
+
+    <!--New Skill Add -->
+    
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Task</th>
+                <th>Derece</th>
+                <th>Oran</th>
+                <th>Düzenle</th>
+                <th>Sil</th>
+
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                if (item.Oran <= 50) { renk = "progress-bar bg-secondary"; label = "badge bg-secondary"; }
+                else if (item.Oran > 50 && item.Oran <= 60) { renk = "progress-bar bg-warning"; label = "badge bg-warning"; }
+                else if (item.Oran >= 90 ) { renk = "progress-bar bg-danger"; label = "badge bg-danger"; }
+                else { renk = "progress-bar bg-primary"; label = "badge bg-primary"; }
+
+                <tr>
+                    <td>@item.ID.</td>
+                    <td>@item.Yetenek</td>
+
+                    <td>
+                        <div class="progress ">
+                            <div class="@renk" style="width: @item.Oran%"></div>
+                        </div>
+                    </td>
+                    <td><span class="">@item.Oran%</span></td>
+                    <td><a href="/Yeteneklerim/YetenekGetir/@item.ID" class="btn-sm btn-success">Düzenle</a></td>
+                    <td><a href="/Yeteneklerim/YetenekSil/@item.ID" class="btn-sm btn-danger">Sil</a></td>
+
+                </tr>
+            }
+        </tbody>
+    </table>
+    <a href="/Yeteneklerim/YetenekEkle" class="btn btn-primary mb-2">Yeni Yetenek Ekle</a>
+
+
+
+
